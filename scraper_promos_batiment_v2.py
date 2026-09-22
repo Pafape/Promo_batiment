@@ -49,6 +49,7 @@ VILLES = [
     "Sarreguemines",
     "Freyming-Merlebach",
     "Metz",
+    "Augny",
 ]
 
 PRICE_RE = re.compile(r"(\d+(?:,\d{2})?)\s?€")

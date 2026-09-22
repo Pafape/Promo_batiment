@@ -1,18 +1,22 @@
 [
-  {
-    "mots_cles": ["gouttière"],
-    "note": "Pour la façade arrière"
-  },
-  {
-    "mots_cles": ["carrelage", "grès cérame"],
-    "note": "Sol garage, ~40 m²"
-  },
-  {
-    "mots_cles": ["fenêtre pvc"],
-    "note": "Remplacement chambre"
-  },
-  {
-    "mots_cles": ["perceuse", "visseuse"],
-    "note": "Si bon prix, pas urgent"
-  }
+  { "mots_cles": ["climatiseur"], "note": "Unité extérieure LG MU3R21.U24AO + unités intérieures PM07SK.NSA / PZ12EYN.CSJ1" },
+  { "mots_cles": ["climatisation"], "note": "Unité extérieure LG MU3R21.U24AO + unités intérieures PM07SK.NSA / PZ12EYN.CSJ1" },
+  { "mots_cles": ["ballon thermodynamique"], "note": "Vitocal 060" },
+  { "mots_cles": ["chauffe-eau thermodynamique"], "note": "Vitocal 060" },
+  { "mots_cles": ["laine de verre"], "note": "Isolation combles, épaisseur 200mm, R=7.5 m².K/W" },
+  { "mots_cles": ["vmc"], "note": "Hygroréglable, consommation électrique <= 0.25 Wh/(m3/h)" },
+  { "mots_cles": ["disjoncteur"], "note": "Matériel électrique — voir doc joint pour détail" },
+  { "mots_cles": ["câble électrique"], "note": "Matériel électrique — voir doc joint pour détail" },
+  { "mots_cles": ["prise électrique"], "note": "Matériel électrique — voir doc joint pour détail" },
+  { "mots_cles": ["cuisine"], "note": "Pas de détail précisé" },
+  { "mots_cles": ["carrelage"], "note": "Pas de détail précisé" },
+  { "mots_cles": ["peinture"], "note": "Papier peint et peinture" },
+  { "mots_cles": ["papier peint"], "note": "Papier peint et peinture" },
+  { "mots_cles": ["dumawall"], "note": "Murs salle de bains et toilettes" },
+  { "mots_cles": ["traitement charpente"], "note": "Produit pour protéger la charpente" },
+  { "mots_cles": ["parquet"], "note": "" },
+  { "mots_cles": ["alarme"], "note": "Alarme + caméras, référence KERUI" },
+  { "mots_cles": ["caméra"], "note": "Alarme + caméras, référence KERUI" },
+  { "mots_cles": ["détecteur de fumée"], "note": "" },
+  { "mots_cles": ["moustiquaire"], "note": "Moustiquaires fenêtres — menuiseries extérieures" }
 ]

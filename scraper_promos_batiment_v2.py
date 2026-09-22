@@ -48,9 +48,12 @@ VILLES = [
     "Forbach",
     "Sarreguemines",
     "Freyming-Merlebach",
+    "Metz",
 ]
 
 PRICE_RE = re.compile(r"(\d+(?:,\d{2})?)\s?€")
+VALIDITE_RE = re.compile(r"[Vv]alable jusqu['’]au (\d{2}/\d{2}/\d{4})")
+ENSEIGNE_RE = re.compile(r"/([^/]+)/p-r\d+")
 
 
 # ---- Étape 1 : découvrir les enseignes bricolage présentes par ville ----
@@ -69,15 +72,19 @@ def get_enseignes_bricolage(ville: str) -> list[dict]:
     enseignes = []
     seen = set()
     # Les liens vers les pages promos par enseigne suivent le motif
-    # /{ville}/{enseigne}/p-r{id}
+    # /{ville}/{enseigne}/p-r{id}. On extrait le nom de l'enseigne via
+    # regex sur le href plutôt que par position (fragile si le lien est
+    # absolu au lieu de relatif — bug corrigé ici).
     for a in soup.find_all("a", href=re.compile(rf"/{re.escape(ville)}/[^/]+/p-r\d+")):
         href = a.get("href")
         if href in seen:
             continue
         seen.add(href)
+        m = ENSEIGNE_RE.search(href)
+        nom_enseigne = m.group(1).replace("-", " ") if m else "Enseigne inconnue"
         enseignes.append({
             "ville": ville,
-            "enseigne": href.split("/")[2],
+            "enseigne": nom_enseigne,
             "url": href if href.startswith("http") else f"https://www.bonial.fr{href}",
         })
     return enseignes
@@ -138,7 +145,43 @@ def get_produits(url: str, ville: str, enseigne: str) -> list[dict]:
             "remise_pct": round((1 - prix / prix_barre) * 100) if prix_barre else None,
             "image_url": image_url,
             "lien": lien,
+            "valide_jusquau": None,
+            "type": "produit",
         })
+
+    # Repli : certaines enseignes (observé pour Brico Dépôt, Leroy Merlin)
+    # n'exposent pas de promos individuelles en texte structuré sur cette
+    # page — seulement une carte de catalogue avec une période de
+    # validité. Dans ce cas, on remonte au moins une entrée "catalogue
+    # complet" plutôt que de ne rien montrer du tout. Couvrir chaque
+    # produit de ces catalogues nécessiterait de l'OCR sur le prospectus
+    # (non fait ici).
+    if not produits:
+        texte_page = soup.get_text(" ", strip=True)
+        m_date = VALIDITE_RE.search(texte_page)
+        date_validite = m_date.group(1) if m_date else None
+
+        img_catalogue = soup.find("img", alt=re.compile(r"^(Prospectus|Catalogue)"))
+        image_url = None
+        if img_catalogue:
+            image_url = img_catalogue.get("src") or img_catalogue.get("data-src")
+            if image_url and image_url.startswith("//"):
+                image_url = "https:" + image_url
+
+        if date_validite or img_catalogue:
+            produits.append({
+                "ville": ville,
+                "enseigne": enseigne,
+                "produit": f"Catalogue {enseigne} — voir toutes les promos",
+                "prix": None,
+                "prix_barre": None,
+                "remise_pct": None,
+                "image_url": image_url,
+                "lien": url,
+                "valide_jusquau": date_validite,
+                "type": "catalogue",
+            })
+
     return produits
 
 

@@ -434,10 +434,11 @@ async function chargerDonnees() {
       dist: null,
       price: p.prix,
       was: p.prix_barre || p.prix,
-      until: null,
+      until: p.valide_jusquau,
       url: p.lien || null,
       img: p.image_url || null,
       besoin: p.correspond_besoin || null,
+      type: p.type || "produit",
     }));
     usingDemoData = false;
     document.getElementById('data-notice').textContent =
@@ -498,9 +499,9 @@ function render() {
   });
 
   items.sort((a, b) => {
-    if (sortKey === 'discount') return pct(b.price, b.was) - pct(a.price, a.was);
-    if (sortKey === 'price') return a.price - b.price;
-    if (sortKey === 'distance') return a.dist - b.dist;
+    if (sortKey === 'discount') return (b.price ? pct(b.price, b.was) : -1) - (a.price ? pct(a.price, a.was) : -1);
+    if (sortKey === 'price') return (a.price ?? Infinity) - (b.price ?? Infinity);
+    if (sortKey === 'distance') return (a.dist ?? Infinity) - (b.dist ?? Infinity);
   });
 
   document.getElementById('count').textContent = items.length + (items.length > 1 ? ' offres' : ' offre');
@@ -527,18 +528,21 @@ function render() {
     const thumb = p.img
       ? `<div class="card-thumb"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>`
       : `<div class="card-thumb placeholder">visuel à venir<br>(source réelle)</div>`;
+    const prixBloc = p.price
+      ? `<div class="price-row">
+          <span class="price-now">${p.price.toFixed(2).replace('.', ',')} €</span>
+          ${p.was && p.was !== p.price ? `<span class="price-was">${p.was.toFixed(2).replace('.', ',')} €</span>` : ''}
+        </div>`
+      : `<div class="price-row"><span style="font-size:13px;color:var(--blueprint);font-weight:600;">Voir le catalogue complet →</span></div>`;
     card.innerHTML = `
       ${thumb}
       <div class="card-top">
         <span class="cat-tag">${CATEGORIES[p.cat]}</span>
-        <span class="discount">-${pct(p.price, p.was)}%</span>
+        ${p.price ? `<span class="discount">-${pct(p.price, p.was)}%</span>` : ''}
       </div>
       ${p.besoin ? `<span class="besoin-badge">★ Correspond à : ${p.besoin}</span>` : ''}
       <h3>${p.name}</h3>
-      <div class="price-row">
-        <span class="price-now">${p.price.toFixed(2).replace('.', ',')} €</span>
-        <span class="price-was">${p.was.toFixed(2).replace('.', ',')} €</span>
-      </div>
+      ${prixBloc}
       <div class="card-meta">
         <span>${p.store}${p.town ? ' — ' + p.town : ''}</span>
         ${p.dist != null ? `<span>${p.dist} km</span>` : ''}

@@ -1,5 +1,5 @@
 {
-  "genere_le": "2026-09-22T19:38:15",
+  "genere_le": "2026-09-22T20:14:51",
   "produits": [
     {
       "ville": "Boulay-Moselle",
@@ -64,7 +64,7 @@
       "lien": null,
       "valide_jusquau": null,
       "type": "produit",
-      "correspond_besoin": null
+      "correspond_besoin": "Hygroréglable, consommation électrique <= 0.25 Wh/(m3/h)"
     },
     {
       "ville": "Boulay-Moselle",
@@ -220,7 +220,7 @@
       "lien": null,
       "valide_jusquau": null,
       "type": "produit",
-      "correspond_besoin": null
+      "correspond_besoin": ""
     },
     {
       "ville": "Boulay-Moselle",
@@ -441,7 +441,7 @@
       "lien": null,
       "valide_jusquau": null,
       "type": "produit",
-      "correspond_besoin": null
+      "correspond_besoin": "Papier peint et peinture"
     },
     {
       "ville": "Forbach",
@@ -727,7 +727,7 @@
       "lien": null,
       "valide_jusquau": null,
       "type": "produit",
-      "correspond_besoin": null
+      "correspond_besoin": "Papier peint et peinture"
     },
     {
       "ville": "Metz",
@@ -1000,6 +1000,32 @@
       "lien": null,
       "valide_jusquau": null,
       "type": "produit",
+      "correspond_besoin": null
+    },
+    {
+      "ville": "Augny",
+      "enseigne": "Bricoman",
+      "produit": "Catalogue Bricoman — voir toutes les promos",
+      "prix": null,
+      "prix_barre": null,
+      "remise_pct": null,
+      "image_url": "https://content-media.bonial.biz/519ff782-f7a9-4c2e-905d-7fcaf8d2f51d/preview.jpg?impolicy=SEO-BROCHURE",
+      "lien": "https://www.bonial.fr/Augny/Bricoman/p-r70",
+      "valide_jusquau": "13/10/2026",
+      "type": "catalogue",
+      "correspond_besoin": null
+    },
+    {
+      "ville": "Augny",
+      "enseigne": "Mister Menuiserie",
+      "produit": "Catalogue Mister Menuiserie — voir toutes les promos",
+      "prix": null,
+      "prix_barre": null,
+      "remise_pct": null,
+      "image_url": "https://content-media.bonial.biz/7482c4ca-14ae-4c33-b100-f0b68969ebf3/preview.jpg?impolicy=SEO-BROCHURE",
+      "lien": "https://www.bonial.fr/Augny/Mister-Menuiserie/p-r1464",
+      "valide_jusquau": "13/10/2026",
+      "type": "catalogue",
       "correspond_besoin": null
     }
   ]

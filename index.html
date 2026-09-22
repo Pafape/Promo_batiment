@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChantierPromo — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --concrete: #EAE6DD;
+    --concrete-dark: #DCD6C8;
+    --ink: #1C2B39;
+    --ink-soft: #4A5D6B;
+    --steel: #7A8B96;
+    --blueprint: #2B5C7A;
+    --safety: #E8622C;
+    --safety-dark: #C74E1E;
+    --warn: #E8A527;
+    --card: #FDFCF9;
+    --line: rgba(28,43,57,0.14);
+    --radius: 3px;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --concrete: #171D22;
+      --concrete-dark: #10151A;
+      --ink: #ECEAE3;
+      --ink-soft: #B7C2C9;
+      --steel: #7A8B96;
+      --card: #1E262C;
+      --line: rgba(236,234,227,0.14);
+    }
+  }
+  :root[data-theme="dark"] {
+    --concrete: #171D22;
+    --concrete-dark: #10151A;
+    --ink: #ECEAE3;
+    --ink-soft: #B7C2C9;
+    --steel: #7A8B96;
+    --card: #1E262C;
+    --line: rgba(236,234,227,0.14);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--concrete);
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 28px 28px;
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+  header {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 10;
+    background: var(--ink);
+    color: var(--concrete);
+    padding: 18px 18px 16px;
+    border-bottom: 4px solid var(--safety);
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .brand .mark {
+    background: var(--safety);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 2px 7px;
+    border-radius: var(--radius);
+    letter-spacing: 0.02em;
+  }
+  .brand h1 {
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0;
+  }
+  .zone-line {
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--concrete-dark);
+    opacity: 0.85;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .zone-line b { color: var(--concrete); font-weight: 600; }
+  .zone-line #ville-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed rgba(234,230,221,0.5);
+    color: var(--concrete);
+    font-weight: 600;
+    font-family: inherit;
+    font-size: 12.5px;
+    padding: 0 1px 1px;
+    width: 150px;
+  }
+  .zone-line #ville-input:focus { outline: none; border-bottom-color: var(--safety); }
+  .zone-line .radius-badge {
+    border: 1px solid rgba(234,230,221,0.35);
+    border-radius: 999px;
+    padding: 1px 9px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+  }
+
+  .searchbar {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+  }
+  .searchbar input {
+    flex: 1;
+    background: var(--concrete);
+    border: none;
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--ink);
+  }
+  .searchbar input::placeholder { color: var(--ink-soft); }
+  .searchbar input:focus { outline: 2px solid var(--safety); outline-offset: 1px; }
+
+  .filters {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    padding: 12px 18px 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.01em;
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink-soft);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .chip[aria-pressed="true"] {
+    background: var(--blueprint);
+    border-color: var(--blueprint);
+    color: #fff;
+  }
+
+  .sort-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px 6px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+  .sort-row select {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--ink);
+    padding: 5px 8px;
+  }
+
+  main { padding: 6px 18px 40px; max-width: 760px; margin: 0 auto; }
+
+  .count { font-family: 'IBM Plex Mono', monospace; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  @media (min-width: 620px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 14px 12px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+  }
+  a.card:hover { border-color: var(--blueprint); }
+  .card-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: var(--radius);
+    background: var(--concrete-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card-thumb.placeholder {
+    color: var(--steel);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    text-align: center;
+    padding: 6px;
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .cat-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    text-transform: none;
+    color: var(--blueprint);
+    border: 1px solid currentColor;
+    border-radius: var(--radius);
+    padding: 1px 6px;
+    white-space: nowrap;
+  }
+  .discount {
+    background: var(--safety);
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 2px 8px;
+    border-radius: var(--radius);
+    white-space: nowrap;
+  }
+  .besoin-badge {
+    background: var(--warn);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: var(--radius);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    align-self: flex-start;
+  }
+  .card h3 {
+    margin: 0;
+    font-size: 15.5px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .price-now { font-size: 21px; font-weight: 700; color: var(--safety-dark); }
+  .price-was { font-size: 13px; color: var(--steel); text-decoration: line-through; }
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border-top: 1px dashed var(--line);
+    padding-top: 8px;
+    margin-top: 2px;
+  }
+  .card-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-soft);
+  }
+  .empty .big { font-family: 'Space Grotesk', sans-serif; font-size: 17px; color: var(--ink); margin-bottom: 6px; }
+
+  .notice {
+    margin: 16px 18px 0;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--warn);
+    padding: 10px 12px;
+    background: var(--card);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .notice b { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><span class="mark">v0</span><h1>ChantierPromo</h1></div>
+  <div class="zone-line">
+    Autour de <input id="ville-input" type="text" value="Porcelette (57890)" spellcheck="false"> <span class="radius-badge">rayon 50 km</span>
+  </div>
+  <div class="searchbar">
+    <input id="search" type="text" placeholder="Rechercher un produit — ex. perceuse, carrelage, gouttière…" autocomplete="off">
+  </div>
+</header>
+
+<div class="filters" id="filters"></div>
+
+<div id="data-notice" style="font-size:11px; color:var(--ink-soft); padding:8px 18px 0; max-width:760px; margin:0 auto;"></div>
+<div class="sort-row">
+  <span class="count" id="count"></span>
+  <select id="sort">
+    <option value="discount">Trier : remise %</option>
+    <option value="price">Trier : prix</option>
+    <option value="distance">Trier : distance</option>
+  </select>
+</div>
+<div style="padding: 0 18px 8px; max-width:760px; margin:0 auto;">
+  <button class="chip" id="besoin-toggle" aria-pressed="false" style="width:100%">★ Mes besoins uniquement</button>
+</div>
+
+<main>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">
+    <div class="big">Aucun résultat</div>
+    Essaie un autre mot-clé ou un autre corps de métier.
+  </div>
+
+  <div class="notice">
+    <b>Prototype avec données d'exemple.</b> Ces produits illustrent le rendu final — ils viennent d'une recherche ponctuelle et non d'un scraper actif. Les cartes sont déjà prêtes à afficher une vraie miniature et un lien cliquable dès que le JSON du scraper (champs <code>image_url</code> / <code>lien</code>) remplace ces données d'exemple.
+  </div>
+</main>
+
+<script>
+const CATEGORIES = {
+  gros_oeuvre: "Gros œuvre",
+  plomberie: "Plomberie",
+  electricite: "Électricité",
+  menuiserie: "Menuiserie",
+  peinture: "Peinture / Finitions",
+  outillage: "Outillage",
+  jardin: "Jardin / Extérieur",
+  quincaillerie: "Quincaillerie",
+  autre: "Autre"
+};
+
+// Classement grossier par mots-clés — à affiner selon les vrais noms de
+// produits observés une fois le scraper alimenté en continu.
+const MOTS_CLES = {
+  gros_oeuvre: ["ciment", "carrelage", "dalle", "parpaing", "béton", "isolant", "gouttière", "placo", "enduit", "brique"],
+  plomberie: ["robinet", "tube per", "évier", "wc", "chauffe-eau", "vmc", "siphon", "tuyau", "sanitaire"],
+  electricite: ["disjoncteur", "câble électrique", "prise", "interrupteur", "ampoule", "détecteur de fumée", "radiateur électrique"],
+  menuiserie: ["porte", "fenêtre", "volet", "bois", "parquet", "plinthe"],
+  peinture: ["peinture", "enduit de lissage", "vernis", "sous-couche", "pinceau", "rouleau"],
+  outillage: ["perceuse", "scie", "visseuse", "meuleuse", "marteau", "niveau"],
+  jardin: ["tondeuse", "pergola", "débroussailleuse", "taille-haie", "broyeur", "clôture"],
+  quincaillerie: ["vis", "agrafe", "boulon", "cheville", "assortiment"]
+};
+function deviner_categorie(nom) {
+  const n = nom.toLowerCase();
+  for (const [cat, mots] of Object.entries(MOTS_CLES)) {
+    if (mots.some(m => n.includes(m))) return cat;
+  }
+  return "autre";
+}
+
+// Données de secours si data.json est introuvable (premier essai avant
+// que le scraper ait tourné, ou test en local sans serveur).
+const DEMO_PRODUCTS = [
+  { name: "Pergola Prima alu 4×3 m", cat: "jardin", store: "Weldom", town: "Saint-Avold", dist: 6, price: 590.00, was: 737.50, until: "28/09" },
+  { name: "Dalle Pila 50×50×3 cm effet bois", cat: "gros_oeuvre", store: "Weldom", town: "Saint-Avold", dist: 6, price: 0.90, was: 1.10, until: "28/09" },
+  { name: "Broyeur de végétaux Sterwins 2800 W", cat: "jardin", store: "Weldom", town: "Saint-Avold", dist: 6, price: 49.00, was: 58.30, until: "28/09" },
+  { name: "Agrafes biseau 20×5×20 cm (×12)", cat: "quincaillerie", store: "Weldom", town: "Saint-Avold", dist: 6, price: 0.90, was: 1.05, until: "28/09" },
+  { name: "Perceuse-visseuse sans fil 18V (2 batteries)", cat: "outillage", store: "Brico Dépôt", town: "Forbach", dist: 19, price: 79.00, was: 109.00, until: "04/10" },
+  { name: "Carrelage sol intérieur 60×60 grès cérame", cat: "gros_oeuvre", store: "Brico Dépôt", town: "Forbach", dist: 19, price: 12.90, was: 17.90, until: "04/10" },
+  { name: "Sac de ciment gris 35 kg", cat: "gros_oeuvre", store: "Gedimat", town: "Boulay", dist: 22, price: 6.40, was: 7.90, until: "02/10" },
+  { name: "Robinet mitigeur évier cuisine chromé", cat: "plomberie", store: "Castorama", town: "Saint-Avold", dist: 6, price: 34.90, was: 49.90, until: "29/09" },
+  { name: "Tube PER Ø16 barre 4 m (lot de 5)", cat: "plomberie", store: "Brossette", town: "Macheren", dist: 11, price: 18.50, was: 23.00, until: "30/09" },
+  { name: "Disjoncteur différentiel 30mA type AC 40A", cat: "electricite", store: "Castorama", town: "Saint-Avold", dist: 6, price: 22.90, was: 29.90, until: "29/09" },
+  { name: "Câble électrique R2V 3G2.5 (touret 50 m)", cat: "electricite", store: "Gedimat", town: "Boulay", dist: 22, price: 39.90, was: 52.00, until: "02/10" },
+  { name: "Peinture façade blanche mate 10 L", cat: "peinture", store: "Leroy Merlin", town: "Forbach", dist: 19, price: 54.90, was: 79.90, until: "06/10" },
+  { name: "Enduit de lissage intérieur 25 kg", cat: "peinture", store: "Leroy Merlin", town: "Forbach", dist: 19, price: 14.50, was: 18.90, until: "06/10" },
+  { name: "Porte intérieure postformée 73 cm", cat: "menuiserie", store: "Brico Dépôt", town: "Forbach", dist: 19, price: 39.00, was: 55.00, until: "04/10" },
+  { name: "Fenêtre PVC 2 vantaux 120×100 cm", cat: "menuiserie", store: "Tout Faire Matériaux", town: "Saint-Avold", dist: 6, price: 189.00, was: 245.00, until: "02/10" },
+  { name: "Visserie assortiment bois/métal (240 pcs)", cat: "quincaillerie", store: "Weldom", town: "Saint-Avold", dist: 6, price: 12.90, was: 16.90, until: "28/09" },
+  { name: "Scie circulaire filaire 1600 W", cat: "outillage", store: "Castorama", town: "Saint-Avold", dist: 6, price: 69.00, was: 89.00, until: "29/09" },
+  { name: "Gouttière PVC blanche 4 m", cat: "gros_oeuvre", store: "Gedimat", town: "Boulay", dist: 22, price: 15.90, was: 19.90, until: "02/10" },
+  { name: "Isolant laine de verre 100 mm (panneau 5,5 m²)", cat: "gros_oeuvre", store: "Tout Faire Matériaux", town: "Saint-Avold", dist: 6, price: 24.90, was: 31.90, until: "02/10" },
+  { name: "Tondeuse thermique tractée 46 cm", cat: "jardin", store: "Leroy Merlin", town: "Forbach", dist: 19, price: 249.00, was: 329.00, until: "06/10" },
+];
+
+function pct(p, was) { return Math.round((1 - p / was) * 100); }
+
+let PRODUCTS = DEMO_PRODUCTS;
+let usingDemoData = true;
+
+async function chargerDonnees() {
+  try {
+    const resp = await fetch('data.json', { cache: 'no-store' });
+    if (!resp.ok) throw new Error('data.json introuvable');
+    const data = await resp.json();
+    const produits = (data.produits || []).filter(p => p.produit && p.prix);
+    if (produits.length === 0) throw new Error('data.json vide');
+    PRODUCTS = produits.map(p => ({
+      name: p.produit,
+      cat: deviner_categorie(p.produit),
+      store: p.enseigne,
+      town: p.ville,
+      dist: null,
+      price: p.prix,
+      was: p.prix_barre || p.prix,
+      until: null,
+      url: p.lien || null,
+      img: p.image_url || null,
+      besoin: p.correspond_besoin || null,
+    }));
+    usingDemoData = false;
+    document.getElementById('data-notice').textContent =
+      `Données du ${new Date(data.genere_le).toLocaleDateString('fr-FR')}, ${PRODUCTS.length} offres.`;
+  } catch (e) {
+    // Reste sur DEMO_PRODUCTS — data.json pas encore généré ou inaccessible.
+    document.getElementById('data-notice').textContent =
+      'data.json introuvable — affichage des données d\'exemple en attendant le premier passage du scraper.';
+  }
+  render();
+}
+
+let activeCat = null;
+let query = "";
+let sortKey = "discount";
+
+const filtersEl = document.getElementById('filters');
+const allChip = mkChip("Tous", null);
+filtersEl.appendChild(allChip);
+Object.entries(CATEGORIES).forEach(([key, label]) => filtersEl.appendChild(mkChip(label, key)));
+
+function mkChip(label, key) {
+  const b = document.createElement('button');
+  b.className = 'chip';
+  b.textContent = label;
+  b.setAttribute('aria-pressed', key === activeCat ? 'true' : 'false');
+  b.addEventListener('click', () => {
+    activeCat = key;
+    [...filtersEl.children].forEach(c => c.setAttribute('aria-pressed', 'false'));
+    b.setAttribute('aria-pressed', 'true');
+    render();
+  });
+  return b;
+}
+allChip.setAttribute('aria-pressed', 'true');
+
+document.getElementById('search').addEventListener('input', e => {
+  query = e.target.value.trim().toLowerCase();
+  render();
+});
+document.getElementById('sort').addEventListener('change', e => {
+  sortKey = e.target.value;
+  render();
+});
+let besoinOnly = false;
+document.getElementById('besoin-toggle').addEventListener('click', e => {
+  besoinOnly = !besoinOnly;
+  e.target.setAttribute('aria-pressed', besoinOnly ? 'true' : 'false');
+  render();
+});
+
+function render() {
+  let items = PRODUCTS.filter(p => {
+    const matchCat = !activeCat || p.cat === activeCat;
+    const matchQuery = !query || p.name.toLowerCase().includes(query) || p.store.toLowerCase().includes(query);
+    const matchBesoin = !besoinOnly || !!p.besoin;
+    return matchCat && matchQuery && matchBesoin;
+  });
+
+  items.sort((a, b) => {
+    if (sortKey === 'discount') return pct(b.price, b.was) - pct(a.price, a.was);
+    if (sortKey === 'price') return a.price - b.price;
+    if (sortKey === 'distance') return a.dist - b.dist;
+  });
+
+  document.getElementById('count').textContent = items.length + (items.length > 1 ? ' offres' : ' offre');
+
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+  grid.innerHTML = '';
+
+  if (items.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  items.forEach(p => {
+    const hasLink = !!p.url;
+    const card = document.createElement(hasLink ? 'a' : 'div');
+    card.className = 'card';
+    if (hasLink) {
+      card.href = p.url;
+      card.target = '_blank';
+      card.rel = 'noopener';
+    }
+    const thumb = p.img
+      ? `<div class="card-thumb"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>`
+      : `<div class="card-thumb placeholder">visuel à venir<br>(source réelle)</div>`;
+    card.innerHTML = `
+      ${thumb}
+      <div class="card-top">
+        <span class="cat-tag">${CATEGORIES[p.cat]}</span>
+        <span class="discount">-${pct(p.price, p.was)}%</span>
+      </div>
+      ${p.besoin ? `<span class="besoin-badge">★ Correspond à : ${p.besoin}</span>` : ''}
+      <h3>${p.name}</h3>
+      <div class="price-row">
+        <span class="price-now">${p.price.toFixed(2).replace('.', ',')} €</span>
+        <span class="price-was">${p.was.toFixed(2).replace('.', ',')} €</span>
+      </div>
+      <div class="card-meta">
+        <span>${p.store}${p.town ? ' — ' + p.town : ''}</span>
+        ${p.dist != null ? `<span>${p.dist} km</span>` : ''}
+        ${p.until ? `<span>jusqu'au ${p.until}</span>` : ''}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+chargerDonnees();
+</script>
+</body>
+</html>

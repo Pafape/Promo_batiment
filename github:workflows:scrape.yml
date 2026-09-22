@@ -1,0 +1,36 @@
+name: Mise à jour des promos
+
+on:
+  schedule:
+    # Tous les jours à 6h00 UTC (7h ou 8h heure française selon la saison)
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    # Permet aussi de le lancer manuellement depuis l'onglet "Actions" du repo
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le repo
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer les dépendances
+        run: pip install requests beautifulsoup4
+
+      - name: Lancer le scraper
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python scraper_promos_batiment_v2.py
+
+      - name: Publier data.json si changé
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git diff --staged --quiet || git commit -m "Mise à jour automatique des promos"
+          git push

@@ -28,6 +28,8 @@ Usage :
 import re
 import time
 import json
+import os
+import unicodedata
 import requests
 from bs4 import BeautifulSoup
 
@@ -55,6 +57,18 @@ VILLES = [
 PRICE_RE = re.compile(r"(\d+(?:,\d{2})?)\s?€")
 VALIDITE_RE = re.compile(r"[Vv]alable jusqu['’]au (\d{2}/\d{2}/\d{4})")
 ENSEIGNE_RE = re.compile(r"/([^/]+)/p-r\d+")
+
+
+def slugify(terme: str) -> str:
+    """Convertit un mot-clé en slug de catégorie Bonial : sans accents,
+    mots séparés par des tirets, chaque mot avec une majuscule initiale
+    (ex. 'câble électrique' -> 'Cable-Electrique'). Ne garantit pas que
+    la catégorie existe réellement chez Bonial — voir get_promos_produit.
+    """
+    nfkd = unicodedata.normalize("NFKD", terme)
+    sans_accents = "".join(c for c in nfkd if not unicodedata.combining(c))
+    mots = re.split(r"[\s-]+", sans_accents.strip())
+    return "-".join(m.capitalize() for m in mots if m)
 
 
 # ---- Étape 1 : découvrir les enseignes bricolage présentes par ville ----
@@ -186,7 +200,62 @@ def get_produits(url: str, ville: str, enseigne: str) -> list[dict]:
     return produits
 
 
-import os
+# ---- Étape 3 : recherche ciblée par produit, toutes enseignes -----------
+# Source distincte, plus fiable : bonial.fr/{ville}/Promos/{terme} donne
+# un vrai tableau (Produit / Marque / Enseigne / Prix / Remise) agrégeant
+# TOUTES les enseignes pour ce terme — contourne le problème des pages
+# par enseigne qui ratent certains magasins (Castorama notamment).
+# Limite connue : le terme doit correspondre à une catégorie Bonial
+# existante (ex. "Carrelage-Mural" fonctionne, un slug inventé peut ne
+# renvoyer aucun résultat sans que ce soit une erreur).
+
+def get_promos_produit(ville: str, terme: str) -> list[dict]:
+    slug = slugify(terme)
+    url = f"https://www.bonial.fr/{ville}/Promos/{slug}"
+    resp = requests.get(url, headers=HEADERS, timeout=15)
+    if resp.status_code == 404:
+        return []
+    resp.raise_for_status()
+    soup = BeautifulSoup(resp.text, "html.parser")
+
+    table = soup.find("table")
+    if not table:
+        return []
+
+    produits = []
+    lignes = table.find_all("tr")[1:]  # ignore l'en-tête
+    for ligne in lignes:
+        cols = [c.get_text(" ", strip=True) for c in ligne.find_all(["td", "th"])]
+        if len(cols) < 4:
+            continue
+        nom, marque, enseigne, prix_col = cols[0], cols[1], cols[2], cols[3]
+        remise_col = cols[5] if len(cols) > 5 else ""
+
+        m_prix = PRICE_RE.search(prix_col)
+        if not m_prix:
+            continue
+        prix = float(m_prix.group(1).replace(",", "."))
+
+        prix_barre = None
+        m_remise = PRICE_RE.search(remise_col) if remise_col else None
+        if m_remise:
+            prix_barre = prix + float(m_remise.group(1).replace(",", "."))
+
+        nom_complet = nom if not marque or marque.lower() in nom.lower() else f"{marque} {nom}"
+
+        produits.append({
+            "ville": ville,
+            "enseigne": enseigne,
+            "produit": nom_complet.strip(),
+            "prix": prix,
+            "prix_barre": prix_barre,
+            "remise_pct": round((1 - prix / prix_barre) * 100) if prix_barre else None,
+            "image_url": None,
+            "lien": url,
+            "valide_jusquau": None,
+            "type": "produit",
+        })
+    return produits
 
 
 def charger_besoins() -> list[dict]:
@@ -238,6 +307,8 @@ def envoyer_alerte_ntfy(produits_matches: list[dict]) -> None:
 # ---- Boucle principale --------------------------------------------------
 
 def main():
+    besoins = charger_besoins()
+
     tous_produits = []
     for ville in VILLES:
         print(f"→ {ville}")
@@ -259,8 +330,27 @@ def main():
                 print(f"échec ({e})")
             time.sleep(DELAY_SECONDS)
 
-    # Recoupement avec la liste de besoins
-    besoins = charger_besoins()
+    # Recherche ciblée par besoin — un terme par entrée de needs.json,
+    # interrogé pour chaque ville. Vient compléter (pas remplacer) le
+    # scraping par enseigne ci-dessus, avec une bien meilleure couverture
+    # toutes enseignes confondues.
+    termes = sorted({b["mots_cles"][0] for b in besoins if b.get("mots_cles")})
+    if termes:
+        print(f"\nRecherche ciblée pour {len(termes)} terme(s) de besoin :")
+        for ville in VILLES:
+            for terme in termes:
+                try:
+                    produits = get_promos_produit(ville, terme)
+                    if produits:
+                        print(f"  '{terme}' à {ville} : {len(produits)} résultat(s)")
+                    tous_produits.extend(produits)
+                except requests.HTTPError:
+                    pass
+                time.sleep(DELAY_SECONDS)
+
+    # Recoupement avec la liste de besoins (couvre aussi les produits
+    # trouvés par le scraping par enseigne, pas seulement la recherche
+    # ciblée ci-dessus)
     matches = []
     for p in tous_produits:
         besoin = correspond_a_un_besoin(p["produit"], besoins)

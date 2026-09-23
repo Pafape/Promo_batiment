@@ -1,5 +1,5 @@
 {
-  "genere_le": "2026-09-23T06:27:49",
+  "genere_le": "2026-09-23T08:07:58",
   "produits": [
     {
       "ville": "Boulay-Moselle",
@@ -355,19 +355,6 @@
     {
       "ville": "Forbach",
       "enseigne": "Brico Depot",
-      "produit": "Bloque porte isolant prépeinte 73 cm poussant droit",
-      "prix": 119.0,
-      "prix_barre": 999.0,
-      "remise_pct": 88,
-      "image_url": "https://content-media.bonial.biz/d2dbe79c-6bbb-4acb-a469-e27f10ad3f39/473464b5-4877-3b58-bffe-f1557202b082.jpeg?impolicy=SEO-OFFER",
-      "lien": null,
-      "valide_jusquau": null,
-      "type": "produit",
-      "correspond_besoin": null
-    },
-    {
-      "ville": "Forbach",
-      "enseigne": "Brico Depot",
       "produit": "Bloque porte isolant prépeinte 83 cm poussant gauche",
       "prix": 129.0,
       "prix_barre": 999.0,
@@ -381,11 +368,24 @@
     {
       "ville": "Forbach",
       "enseigne": "Brico Depot",
-      "produit": "Sol stratifié à clipser \"SENAC\" couleur chêne blond clair 7 mm 138 cm x 19,3 cm AC4",
-      "prix": 14.4,
+      "produit": "Plinthe SENAC chêne clair 220 cm x 6,8 cm x 0,95 cm",
+      "prix": 7.0,
       "prix_barre": 999.0,
       "remise_pct": 99,
-      "image_url": "https://content-media.bonial.biz/0fc1c570-9765-4e7b-b80c-d581e449862d/c78994d5-643e-3558-87ec-63df47a4bc07.jpeg?impolicy=SEO-OFFER",
+      "image_url": "https://content-media.bonial.biz/4601e23d-8540-4953-b481-119976d64748/18ddc3b2-fd02-37c4-bc0b-6c336ddd0175.jpeg?impolicy=SEO-OFFER",
+      "lien": null,
+      "valide_jusquau": null,
+      "type": "produit",
+      "correspond_besoin": null
+    },
+    {
+      "ville": "Forbach",
+      "enseigne": "Brico Depot",
+      "produit": "Mortier universel - Sac de 30 kg",
+      "prix": 3.6,
+      "prix_barre": 999.0,
+      "remise_pct": 100,
+      "image_url": "https://content-media.bonial.biz/d40a7d1d-3599-415c-9c1b-bcf5510aed85/3e116365-d27e-3d37-b730-b9ddee006615.jpeg?impolicy=SEO-OFFER",
       "lien": null,
       "valide_jusquau": null,
       "type": "produit",

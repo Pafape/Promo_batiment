@@ -412,9 +412,13 @@ def main():
                 produits = get_prospekt_allemagne(enseigne_slug, ville_slug)
                 if produits:
                     print(f"  {enseigne_slug} à {ville_slug} : prospectus trouvé")
+                else:
+                    print(f"  {enseigne_slug} à {ville_slug} : rien trouvé (page vide, pas de prospectus, ou structure différente)")
                 tous_produits.extend(produits)
             except requests.HTTPError as e:
-                print(f"  {enseigne_slug} à {ville_slug} : échec ({e})")
+                print(f"  {enseigne_slug} à {ville_slug} : échec HTTP ({e})")
+            except Exception as e:
+                print(f"  {enseigne_slug} à {ville_slug} : erreur inattendue ({type(e).__name__}: {e})")
             time.sleep(DELAY_SECONDS)
 
     # Recoupement avec la liste de besoins (couvre aussi les produits

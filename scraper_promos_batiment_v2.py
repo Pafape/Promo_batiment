@@ -258,6 +258,61 @@ def get_promos_produit(ville: str, terme: str) -> list[dict]:
     return produits
 
 
+# ---- Étape 4 : catalogues allemands (Sarrelouis / Ensdorf) --------------
+# Contrairement à bonial.fr, prospektangebote.de (l'équivalent allemand)
+# n'expose PAS de tableau produit par produit pour Globus Baumarkt et
+# Bauhaus — uniquement un prospectus en pages-images, comme pour les
+# enseignes françaises sans données structurées. Donc : pas d'alerte
+# possible par mot-clé ici, seulement une carte "voir le prospectus".
+# Slugs vérifiés en direct : globus-baumarkt + saarlouis. Le reste
+# (bauhaus, ensdorf-saarlouis) est déduit par convention, à confirmer au
+# premier run.
+
+ENSEIGNES_ALLEMAGNE = ["globus-baumarkt", "bauhaus"]
+VILLES_ALLEMAGNE = ["saarlouis", "ensdorf-saarlouis"]
+
+VALIDITE_DE_RE = re.compile(r"Gültig von ([^<\n]+?) bis ([^<\n.]+)")
+
+
+def get_prospekt_allemagne(enseigne_slug: str, ville_slug: str) -> list[dict]:
+    url = f"https://www.prospektangebote.de/geschaefte/{enseigne_slug}/standorte/{ville_slug}"
+    resp = requests.get(url, headers=HEADERS, timeout=15)
+    if resp.status_code == 404:
+        return []
+    resp.raise_for_status()
+    soup = BeautifulSoup(resp.text, "html.parser")
+
+    lien_prospectus = None
+    for a in soup.find_all("a", href=re.compile(r"/anzeigen/angebote/")):
+        lien_prospectus = a["href"]
+        if lien_prospectus.startswith("/"):
+            lien_prospectus = f"https://www.prospektangebote.de{lien_prospectus}"
+        break
+    if not lien_prospectus:
+        return []  # pas de prospectus actif pour cette enseigne/ville
+
+    texte_page = soup.get_text(" ", strip=True)
+    m_validite = VALIDITE_DE_RE.search(texte_page)
+    validite = f"{m_validite.group(1)} – {m_validite.group(2)}".strip() if m_validite else None
+
+    logo = soup.find("img", alt=re.compile(re.escape(enseigne_slug.replace("-", " ")), re.I))
+    image_url = logo.get("src") if logo else None
+
+    nom_enseigne = enseigne_slug.replace("-", " ").title()
+    return [{
+        "ville": f"{ville_slug} (DE)",
+        "enseigne": nom_enseigne,
+        "produit": f"Prospectus {nom_enseigne} — voir toutes les promos (Allemagne)",
+        "prix": None,
+        "prix_barre": None,
+        "remise_pct": None,
+        "image_url": image_url,
+        "lien": lien_prospectus,
+        "valide_jusquau": validite,
+        "type": "catalogue",
+    }]
+
+
 def charger_besoins() -> list[dict]:
     """Charge needs.json — la liste des matériaux recherchés."""
     try:
@@ -347,6 +402,20 @@ def main():
                 except requests.HTTPError:
                     pass
                 time.sleep(DELAY_SECONDS)
+
+    # Prospectus allemands (Sarrelouis / Ensdorf) — catalogues complets
+    # uniquement, pas de produits individuels (voir note plus haut).
+    print(f"\nProspectus allemands :")
+    for enseigne_slug in ENSEIGNES_ALLEMAGNE:
+        for ville_slug in VILLES_ALLEMAGNE:
+            try:
+                produits = get_prospekt_allemagne(enseigne_slug, ville_slug)
+                if produits:
+                    print(f"  {enseigne_slug} à {ville_slug} : prospectus trouvé")
+                tous_produits.extend(produits)
+            except requests.HTTPError as e:
+                print(f"  {enseigne_slug} à {ville_slug} : échec ({e})")
+            time.sleep(DELAY_SECONDS)
 
     # Recoupement avec la liste de besoins (couvre aussi les produits
     # trouvés par le scraping par enseigne, pas seulement la recherche

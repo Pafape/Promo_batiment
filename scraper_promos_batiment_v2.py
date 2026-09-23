@@ -39,6 +39,19 @@ HEADERS = {
                   "Chrome/124.0 Safari/537.36",
     "Accept-Language": "fr-FR,fr;q=0.9",
 }
+
+HEADERS_DE = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/124.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Language": "de-DE,de;q=0.9,fr;q=0.6",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Upgrade-Insecure-Requests": "1",
+}
 DELAY_SECONDS = 3
 
 # Villes couvrant le rayon 50 km autour de Porcelette (57890).
@@ -276,10 +289,20 @@ VALIDITE_DE_RE = re.compile(r"Gültig von ([^<\n]+?) bis ([^<\n.]+)")
 
 def get_prospekt_allemagne(enseigne_slug: str, ville_slug: str) -> list[dict]:
     url = f"https://www.prospektangebote.de/geschaefte/{enseigne_slug}/standorte/{ville_slug}"
-    resp = requests.get(url, headers=HEADERS, timeout=15)
+    resp = requests.get(url, headers=HEADERS_DE, timeout=15)
     if resp.status_code == 404:
         return []
     resp.raise_for_status()
+
+    # Diagnostic — à retirer une fois le problème identifié. Montre ce
+    # que le serveur renvoie vraiment : taille de page + indices d'un
+    # mur de consentement cookies ou d'un rendu piloté par JavaScript.
+    taille = len(resp.text)
+    indices_cookie = any(m in resp.text.lower() for m in ["cookie-consent", "consent-banner", "cmp-container", "usercentrics"])
+    indices_js_vide = "<div id=\"root\"></div>" in resp.text or "<div id=\"app\"></div>" in resp.text
+    print(f"    [diag] {enseigne_slug}/{ville_slug} : {resp.status_code}, {taille} caractères, "
+          f"mur cookies probable={indices_cookie}, coquille JS vide probable={indices_js_vide}")
+
     soup = BeautifulSoup(resp.text, "html.parser")
 
     lien_prospectus = None

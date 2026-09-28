@@ -1,5 +1,5 @@
 {
-  "genere_le": "2026-09-27T06:27:16",
+  "genere_le": "2026-09-28T06:29:43",
   "produits": [
     {
       "ville": "Boulay-Moselle",
@@ -1550,19 +1550,6 @@
     },
     {
       "ville": "Metz",
-      "enseigne": "Intermarché Super",
-      "produit": "Scotch Lot de 3 rubans masquage 50mx24mm",
-      "prix": 2.07,
-      "prix_barre": 6.9,
-      "remise_pct": 70,
-      "image_url": null,
-      "lien": "https://www.bonial.fr/Metz/Promos/Peinture",
-      "valide_jusquau": null,
-      "type": "produit",
-      "correspond_besoin": null
-    },
-    {
-      "ville": "Metz",
       "enseigne": "Weldom",
       "produit": "Maison Déco Peinture aérosol Relook",
       "prix": 12.9,
@@ -1573,6 +1560,19 @@
       "valide_jusquau": null,
       "type": "produit",
       "correspond_besoin": "Papier peint et peinture"
+    },
+    {
+      "ville": "Metz",
+      "enseigne": "Weldom",
+      "produit": "DEXTER Kit mur/plafond",
+      "prix": 9.9,
+      "prix_barre": 12.5,
+      "remise_pct": 21,
+      "image_url": null,
+      "lien": "https://www.bonial.fr/Metz/Promos/Peinture",
+      "valide_jusquau": null,
+      "type": "produit",
+      "correspond_besoin": null
     }
   ]
 }

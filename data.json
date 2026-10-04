@@ -1,5 +1,5 @@
 {
-  "genere_le": "2026-10-03T06:31:46",
+  "genere_le": "2026-10-04T11:32:08",
   "produits": [
     {
       "ville": "Boulay-Moselle",
@@ -1269,9 +1269,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/d3e904ac-4333-4b65-a5af-3b56f8f1a4b1/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/7b8dc4ee-1bca-4662-9657-c8e7b1482f6c/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Metz/Point-P/p-r452",
-      "valide_jusquau": "13/10/2026",
+      "valide_jusquau": "15/10/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },

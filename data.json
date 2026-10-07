@@ -1,5 +1,5 @@
 {
-  "genere_le": "2026-10-06T06:28:30",
+  "genere_le": "2026-10-07T06:26:46",
   "produits": [
     {
       "ville": "Boulay-Moselle",
@@ -8,9 +8,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/7b8dc4ee-1bca-4662-9657-c8e7b1482f6c/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/d3e904ac-4333-4b65-a5af-3b56f8f1a4b1/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Boulay-Moselle/Husqvarna/p-r1525",
-      "valide_jusquau": "15/10/2026",
+      "valide_jusquau": "13/10/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -229,9 +229,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/7b8dc4ee-1bca-4662-9657-c8e7b1482f6c/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/d3e904ac-4333-4b65-a5af-3b56f8f1a4b1/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Boulay-Moselle/BigMat/p-r1281",
-      "valide_jusquau": "15/10/2026",
+      "valide_jusquau": "13/10/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -1243,9 +1243,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/7b8dc4ee-1bca-4662-9657-c8e7b1482f6c/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/d3e904ac-4333-4b65-a5af-3b56f8f1a4b1/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Metz/Husqvarna/p-r1525",
-      "valide_jusquau": "15/10/2026",
+      "valide_jusquau": "13/10/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -1256,9 +1256,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/7b8dc4ee-1bca-4662-9657-c8e7b1482f6c/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/d3e904ac-4333-4b65-a5af-3b56f8f1a4b1/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Metz/Eureka-ma-maison/p-r944",
-      "valide_jusquau": "15/10/2026",
+      "valide_jusquau": "13/10/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },

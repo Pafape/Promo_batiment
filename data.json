@@ -1,5 +1,5 @@
 {
-  "genere_le": "2026-10-11T12:30:52",
+  "genere_le": "2026-10-12T14:57:56",
   "produits": [
     {
       "ville": "Boulay-Moselle",
@@ -736,9 +736,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/3217acad-4743-4c47-97cf-78bbc9af7be1/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/3154e797-eee2-4bf9-8676-876abb7ab280/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Sarreguemines/Husqvarna/p-r1525",
-      "valide_jusquau": "22/10/2026",
+      "valide_jusquau": "31/10/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -931,9 +931,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/3217acad-4743-4c47-97cf-78bbc9af7be1/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/3154e797-eee2-4bf9-8676-876abb7ab280/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Sarreguemines/BigMat/p-r1281",
-      "valide_jusquau": "22/10/2026",
+      "valide_jusquau": "31/10/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -944,9 +944,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/3217acad-4743-4c47-97cf-78bbc9af7be1/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/3154e797-eee2-4bf9-8676-876abb7ab280/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Sarreguemines/Bricoman/p-r70",
-      "valide_jusquau": "22/10/2026",
+      "valide_jusquau": "31/10/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -1243,9 +1243,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/3217acad-4743-4c47-97cf-78bbc9af7be1/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/d3e904ac-4333-4b65-a5af-3b56f8f1a4b1/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Metz/Husqvarna/p-r1525",
-      "valide_jusquau": "22/10/2026",
+      "valide_jusquau": "31/10/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -1256,9 +1256,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/3217acad-4743-4c47-97cf-78bbc9af7be1/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/d3e904ac-4333-4b65-a5af-3b56f8f1a4b1/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Metz/Eureka-ma-maison/p-r944",
-      "valide_jusquau": "22/10/2026",
+      "valide_jusquau": "31/10/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -1505,7 +1505,7 @@
       "remise_pct": null,
       "image_url": "https://content-media.bonial.biz/d3e904ac-4333-4b65-a5af-3b56f8f1a4b1/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Augny/Bricoman/p-r70",
-      "valide_jusquau": "22/10/2026",
+      "valide_jusquau": "31/10/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -1654,11 +1654,11 @@
     },
     {
       "ville": "Metz",
-      "enseigne": "Lidl",
-      "produit": "MCENNEDY Beignets d’oignons",
-      "prix": 149.0,
-      "prix_barre": 296.01,
-      "remise_pct": 50,
+      "enseigne": "Carrefour",
+      "produit": "MOULINEX Cookéo+ Extra crisp",
+      "prix": 199.99,
+      "prix_barre": 299.99,
+      "remise_pct": 33,
       "image_url": null,
       "lien": "https://www.bonial.fr/Metz/Promos/Cuisine",
       "valide_jusquau": null,
@@ -1667,11 +1667,11 @@
     },
     {
       "ville": "Metz",
-      "enseigne": "Proxi Confort",
-      "produit": "BEKO Lave-vaisselle",
-      "prix": 499.9,
-      "prix_barre": 599.9,
-      "remise_pct": 17,
+      "enseigne": "Carrefour",
+      "produit": "MOULINEX Robot cuiseur Companion avec extension air fryer",
+      "prix": 599.99,
+      "prix_barre": 699.99,
+      "remise_pct": 14,
       "image_url": null,
       "lien": "https://www.bonial.fr/Metz/Promos/Cuisine",
       "valide_jusquau": null,
@@ -1901,6 +1901,19 @@
     },
     {
       "ville": "Metz",
+      "enseigne": "Lidl",
+      "produit": "PARKSIDE Pistolet à peinture sans fil",
+      "prix": 19.99,
+      "prix_barre": 29.99,
+      "remise_pct": 33,
+      "image_url": null,
+      "lien": "https://www.bonial.fr/Metz/Promos/Peinture",
+      "valide_jusquau": null,
+      "type": "produit",
+      "correspond_besoin": "Papier peint et peinture"
+    },
+    {
+      "ville": "Metz",
       "enseigne": "Castorama",
       "produit": "Peinture(d) anti-humidité blanc satin Ripolin 2,5 L + 20% gratuit",
       "prix": 39.9,
@@ -1963,19 +1976,6 @@
       "valide_jusquau": null,
       "type": "produit",
       "correspond_besoin": "Papier peint et peinture"
-    },
-    {
-      "ville": "Metz",
-      "enseigne": "Screwfix",
-      "produit": "Kit rubiclean eco washboy",
-      "prix": 46.74,
-      "prix_barre": 54.99,
-      "remise_pct": 15,
-      "image_url": null,
-      "lien": "https://www.bonial.fr/Metz/Promos/Peinture",
-      "valide_jusquau": null,
-      "type": "produit",
-      "correspond_besoin": null
     }
   ]
 }

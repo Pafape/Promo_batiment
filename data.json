@@ -1,5 +1,5 @@
 {
-  "genere_le": "2026-10-25T11:08:14",
+  "genere_le": "2026-10-26T12:39:08",
   "produits": [
     {
       "ville": "Boulay-Moselle",
@@ -229,9 +229,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/cff28a74-5c8d-46e7-9e13-a66ae12cd10b/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/c23d39bf-870c-46b7-bf8a-845bb9320e57/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Boulay-Moselle/BigMat/p-r1281",
-      "valide_jusquau": "05/11/2026",
+      "valide_jusquau": "03/11/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -853,9 +853,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/cff28a74-5c8d-46e7-9e13-a66ae12cd10b/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/e26a0c73-2acd-4294-8454-125cbfb2cb20/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Sarreguemines/Husqvarna/p-r1525",
-      "valide_jusquau": "05/11/2026",
+      "valide_jusquau": "03/11/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -1048,9 +1048,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/cff28a74-5c8d-46e7-9e13-a66ae12cd10b/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/e26a0c73-2acd-4294-8454-125cbfb2cb20/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Sarreguemines/BigMat/p-r1281",
-      "valide_jusquau": "05/11/2026",
+      "valide_jusquau": "03/11/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -1685,9 +1685,9 @@
       "prix": null,
       "prix_barre": null,
       "remise_pct": null,
-      "image_url": "https://content-media.bonial.biz/cff28a74-5c8d-46e7-9e13-a66ae12cd10b/preview.jpg?impolicy=SEO-BROCHURE",
+      "image_url": "https://content-media.bonial.biz/c23d39bf-870c-46b7-bf8a-845bb9320e57/preview.jpg?impolicy=SEO-BROCHURE",
       "lien": "https://www.bonial.fr/Metz/BigMat/p-r1281",
-      "valide_jusquau": "05/11/2026",
+      "valide_jusquau": "03/11/2026",
       "type": "catalogue",
       "correspond_besoin": null
     },
@@ -1927,6 +1927,19 @@
     },
     {
       "ville": "Metz",
+      "enseigne": "LEROY MERLIN",
+      "produit": "URSA Rouleau de laine de verre pour combles",
+      "prix": 4.9,
+      "prix_barre": null,
+      "remise_pct": null,
+      "image_url": null,
+      "lien": "https://www.bonial.fr/Metz/Promos/Laine-De-Verre",
+      "valide_jusquau": null,
+      "type": "produit",
+      "correspond_besoin": "Isolation combles, épaisseur 200mm, R=7.5 m².K/W"
+    },
+    {
+      "ville": "Metz",
       "enseigne": "Brico Dépôt",
       "produit": "Laine de verre 45mm 38 1,35x0,6m",
       "prix": 67.8,
@@ -1956,19 +1969,6 @@
       "enseigne": "Brico Dépôt",
       "produit": "Laine de verre 100mm combles40 8 x 1,2 m",
       "prix": 28.7,
-      "prix_barre": null,
-      "remise_pct": null,
-      "image_url": null,
-      "lien": "https://www.bonial.fr/Metz/Promos/Laine-De-Verre",
-      "valide_jusquau": null,
-      "type": "produit",
-      "correspond_besoin": "Isolation combles, épaisseur 200mm, R=7.5 m².K/W"
-    },
-    {
-      "ville": "Metz",
-      "enseigne": "LEROY MERLIN",
-      "produit": "URSA Rouleau de laine de verre pour combles",
-      "prix": 4.9,
       "prix_barre": null,
       "remise_pct": null,
       "image_url": null,

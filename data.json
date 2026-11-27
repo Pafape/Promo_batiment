@@ -1,5 +1,5 @@
 {
-  "genere_le": "2026-11-26T16:45:33",
+  "genere_le": "2026-11-27T16:31:15",
   "produits": [
     {
       "ville": "Boulay-Moselle",
@@ -1733,6 +1733,19 @@
     {
       "ville": "Metz",
       "enseigne": "Lidl",
+      "produit": "SILVERCREST Monsieur Cuisine smart noir ou anthracite",
+      "prix": 399.0,
+      "prix_barre": 549.0,
+      "remise_pct": 27,
+      "image_url": null,
+      "lien": "https://www.bonial.fr/Metz/Promos/Cuisine",
+      "valide_jusquau": null,
+      "type": "produit",
+      "correspond_besoin": "Pas de détail précisé"
+    },
+    {
+      "ville": "Metz",
+      "enseigne": "Lidl",
       "produit": "SILVERCREST Monsieur cuisine smart, blanc",
       "prix": 399.0,
       "prix_barre": 549.0,
@@ -1747,19 +1760,6 @@
       "ville": "Metz",
       "enseigne": "Lidl",
       "produit": "SILVERCREST Monsieur Cuisine smart",
-      "prix": 399.0,
-      "prix_barre": 549.0,
-      "remise_pct": 27,
-      "image_url": null,
-      "lien": "https://www.bonial.fr/Metz/Promos/Cuisine",
-      "valide_jusquau": null,
-      "type": "produit",
-      "correspond_besoin": "Pas de détail précisé"
-    },
-    {
-      "ville": "Metz",
-      "enseigne": "Lidl",
-      "produit": "SILVERCREST Monsieur Cuisine smart noir ou anthracite",
       "prix": 399.0,
       "prix_barre": 549.0,
       "remise_pct": 27,
